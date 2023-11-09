@@ -33,8 +33,7 @@ gen lRandD = log(RandD)
 
 
 
-///tables to produce 
-//baseline (table1)
+//baseline
 xtpoisson quantfrac lnETR lGDPPerCap lRandD lPopGrowth lOpeness lResearcher  i.Year, fe i(country1) vce(robust)
 eststo reg1
 xtpoisson quantfrac L3.(lnETR) i.Year, fe i(country1) vce(robust)
@@ -56,23 +55,6 @@ esttab reg1 reg2 reg3 reg4 reg5 reg6, b(3) modelwidth(10) star( * 0.10 ** 0.05 *
 
 esttab reg1 reg2 reg3 reg4 reg5 reg6 using table.tex, replace b(3) modelwidth(10) star( * 0.10 ** 0.05 *** 0.01) order(lnETR L3.lnETR) rename (lnbackwardfrac BackwardCitation lPopGrowth Population_Growth lGDP GDP lGDPPerCap GDPPerCap lResearcher Researchers lCollege College lRandD RandD lOpeness Openess) addnotes("Robust standard errors in parentheses. All specifications include country and year fixed effects.") nocons se drop(*.Year) label mgroups("Quantity" "Quality", pattern(1 0 0  1 0 0  ) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) collabels(none) nomtitles 
 
-
-
-
-
-
-//negative binomial and OLS fixed effects (table2)
-xtnbreg quantfrac L3.(lnETR) lGDPPerCap lRandD lPopGrowth lOpeness lResearcher i.Year, fe nolog i(country1)
-eststo reg1
-xtnbreg  qualfrac L3.(lnETR) lGDPPerCap lRandD lPopGrowth lOpeness lResearcher i.Year, fe i(country1) nolog exposure(country1)
-eststo reg2
-xtreg lnquantfrac L3.(lnETR) lGDPPerCap lRandD lPopGrowth lOpeness lResearcher i.Year, fe i(country1) vce(robust)
-eststo reg3
-xtreg lnqualfrac L3.(lnETR) lGDPPerCap lRandD lPopGrowth lOpeness lResearcher i.Year, fe i(country1) vce(robust)
-eststo reg4
-
-esttab reg1 reg2 reg3 reg4, b(3) star( * 0.10 ** 0.05 *** 0.01) modelwidth(10) se drop(*.Year) order (L3.lnETR)
-esttab reg1 reg2 reg3 reg4 using table.tex, replace b(3) modelwidth(10) star( * 0.10 ** 0.05 *** 0.01) rename (lnbackwardfrac BackwardCitation lPopGrowth Population_Growth lGDP GDP lGDPPerCap GDPPerCap lResearcher Researchers lCollege College lRandD RandD lOpeness Openess) addnotes("Robust standard errors in parentheses. All specifications include country and year fixed effects.") nocons se drop(*.Year) label mgroups("Negtative Binomial" "OLS FE", pattern(1 0 1 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) collabels(none) mtitles("Quantity" "Quality" "log(1+Quantity)" "log(1+Quality)")
 
 
 ///Other lags (table 3)
@@ -102,12 +84,12 @@ esttab reg1 reg2 reg3 reg4 reg5 reg6 reg7 reg8 reg9 reg10 using table.tex, repla
 
 
 
-//Heterogenous Industries (appendix (table 5))
+//Heterogenous Industries
 
 
 
 
-//Truncation (appendix (table 7))
+//Truncation 
 drop if Year > 2014
 xtpoisson quantfrac L3.lnETR lGDPPerCap lRandD lPopGrowth lOpeness lResearcher i.Year, fe i(country1) vce(robust)
 eststo reg1
