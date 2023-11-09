@@ -20,7 +20,8 @@ library(gdata)
 library(foreign)
 View(patent_full)
 keep(patent_full, result, sure = T)
-##Tools: Poisson, IV
+
+
 patent_full <- read_dta("/Users/wilsontai/Downloads/fullpat_updated_version.dta", 
                         col_select = c(1,6,7, 25,27,  29, 34,35)) ##15 min to run
 head(patent_full)
@@ -308,10 +309,3 @@ nrow(dataAnalysis[dataAnalysis$appfwcit == 0 & dataAnalysis$Year < 2009, ])
 nrow(dataAnalysis[dataAnalysis$appbwcit == 0, ])
 nrow(dataAnalysis[dataAnalysis$appbwcit == 0 & dataAnalysis$granted == 'N', ])
 
-
-
-###Testing max regression run size in STATA 
-##(can run regression with 55million rows, but can't do anything with initial dataset (ie Rons)?)
-patent_full2 <- patent_full
-write.dta(patent_full2, "/Users/wilsontai/Downloads/Patent.dta")
-View(patent_full2)
