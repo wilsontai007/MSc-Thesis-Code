@@ -33,7 +33,7 @@ gen lRandD = log(RandD)
 
 
 
-//baseline
+//baseline (table 2)
 xtpoisson quantfrac lnETR lGDPPerCap lRandD lPopGrowth lOpeness lResearcher  i.Year, fe i(country1) vce(robust)
 eststo reg1
 xtpoisson quantfrac L3.(lnETR) i.Year, fe i(country1) vce(robust)
@@ -83,13 +83,13 @@ esttab reg1 reg2 reg3 reg4 reg5 reg6 reg7 reg8 reg9 reg10 using table.tex, repla
 
 
 
-
-//Heterogenous Industries
-
-
+//Star inventors (table 4)
+//Heterogenous Industries (table 5 and 6)
 
 
-//Truncation 
+
+
+//Truncation (table 7)
 drop if Year > 2014
 xtpoisson quantfrac L3.lnETR lGDPPerCap lRandD lPopGrowth lOpeness lResearcher i.Year, fe i(country1) vce(robust)
 eststo reg1
